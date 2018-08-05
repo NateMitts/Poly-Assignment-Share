@@ -1,8 +1,8 @@
 {
   "public": {
 
-    "title": "Vulcan.js",
-    "tagline":"The React/GraphQL Full-stack Framework",
+    "title": "Poly Assignment Share",
+    "tagline":"A Place To Share Your Knowledge!",
 
     "faviconUrl": "/favicon.ico",
 
@@ -14,13 +14,5 @@
   "mailUrl": "smtp://username%40yourdomain.mailgun.org:yourpassword123@smtp.mailgun.org:587/",
 
   "oAuth": {
-    "twitter": {
-      "consumerKey": "foo",
-      "secret": "bar"
-    },
-    "facebook": {
-      "appId": "foo",
-      "secret": "bar"
-    }
   }
 }
