@@ -1,1 +1,0 @@
-import { GraphQLSchema, addGraphQLSchema, addGraphQLResolvers, addGraphQLQuery } from 'meteor/vulcan:core';
