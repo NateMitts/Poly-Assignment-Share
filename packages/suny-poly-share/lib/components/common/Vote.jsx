@@ -9,12 +9,15 @@ class Vote extends PureComponent {
 
   constructor() {
     super();
-    this.vote = this.vote.bind(this);
+    this.upVote = this.upVote.bind(this);
+    this.downVote = this.downVote.bind(this);
     this.getActionClass = this.getActionClass.bind(this);
-    this.hasVoted = this.hasVoted.bind(this);
+    this.hasUpVoted = this.hasUpVoted.bind(this);
+    this.hasDownVoted = this.hasDownVoted.bind(this);
+
   }
 
-  vote(e) {
+  upVote(e) {
 
     e.preventDefault();
 
@@ -29,15 +32,35 @@ class Vote extends PureComponent {
     } 
   }
 
-  hasVoted() {
+  downVote(e) {
+
+    e.preventDefault();
+
+    const document = this.props.document;
+    const collection = this.props.collection;
+    const user = this.props.currentUser;
+
+    if(!user){
+      this.props.flash({id: 'users.please_log_in'});
+    } else {
+      this.props.vote({document, voteType: 'downvote', collection, currentUser: this.props.currentUser});
+    } 
+  }
+
+  hasUpVoted() {
     return hasVotedClient({document: this.props.document, voteType: 'upvote'})
+  }
+
+  hasDownVoted() {
+    return hasVotedClient({document: this.props.document, voteType: 'downvote'})
   }
 
   getActionClass() {
 
     const actionsClass = classNames(
       'vote-button',
-      {upvoted: this.hasVoted()},
+      {upvoted: this.hasUpVoted()},
+      {downvoted: this.hasDownVoted()},
     );
 
     return actionsClass;
@@ -46,10 +69,14 @@ class Vote extends PureComponent {
   render() {
     return (
       <div className={this.getActionClass()}>
-        <a className="upvote-button" onClick={this.vote}>
+        <a className="upvote-button" onClick={this.upVote}>
           <Components.Icon name="upvote" />
           <div className="sr-only"><FormattedMessage id="voting.upvote"/></div>
-          <div className="vote-count">{this.props.document.baseScore || 0}</div>
+        </a>
+        <div className="vote-count">{this.props.document.baseScore || 0}</div>
+        <a className="downvote-button" onClick={this.downVote}>
+          <Components.Icon name="downvote" />
+          <div className="sr-only"><FormattedMessage id="voting.downvote"/></div>
         </a>
       </div>
     )
